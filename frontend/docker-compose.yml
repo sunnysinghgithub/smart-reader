@@ -1,0 +1,11 @@
+myapp:
+ image: nodejs
+ command: bash -c "cd appsource && npm install && npm start"
+ volumes:
+  - "./frontend:/appsource"
+ ports:
+  - "3000:3000"
+ environment:
+  - NODE_PATH=/usr/lib/node_modules
+ external_links:
+  - backend_backend1:backend

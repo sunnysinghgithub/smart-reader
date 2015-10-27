@@ -1,0 +1,97 @@
+/******************** Header *****************************/
+* {
+  margin: 0;
+}
+
+.jumbotron {
+	background-color: #337AB7;
+	color: #ADE705;
+	padding-top: 5%;
+}
+
+.header {
+	color: white;
+	text-decoration: none;
+}
+
+.header:hover {
+	background-color: transparent;
+	text-decoration: none;
+	color: white;
+}
+
+/******************** Navbar *****************************/
+
+.navbar-btn{
+    margin-left:10px;
+}
+
+.navbar-customs {
+	color: #ADE705;
+}
+
+/******************** Body *****************************/
+
+html, body {
+  height: 100%;
+}
+
+.result {
+	padding-top: 8%;
+}
+
+.content {
+	height: 100%;
+}
+
+.gem {
+	font-weight: bold;
+	font-size: 20px;
+	color: #2F0B3A;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+#gems {
+	font-size: 15px;
+	word-spacing: 30px;
+	color: gray;
+	display: none;
+	white-space: pre-wrap;      /* CSS3 */   
+   	white-space: -moz-pre-wrap; /* Firefox */    
+   	white-space: -pre-wrap;     /* Opera <7 */   
+   	white-space: -o-pre-wrap;   /* Opera 7 */    
+  	word-wrap: break-word;      /* IE */
+  	margin-top: 30px;
+}
+
+#div-submit {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.userselradio {
+	text-align: center;
+}
+
+#login, #register {
+	padding:3%;
+}
+
+.login-btn{
+    margin-left:10px;
+}
+
+/******************** Footer *****************************/
+footer { 
+	background-color: #d3d3d3; 
+	padding: 2%; 
+	color: black; 
+	text-align: center;
+	bottom: 0px;
+	width: 100%;
+}
+
+footer p { font-size: 24px; line-height: 32px;}
+footer p.small { font-size: 12px; line-height: 15px; }
+footer a { color: white; }

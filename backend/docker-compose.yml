@@ -1,0 +1,7 @@
+backend:
+ image: backend
+ volumes:
+  - "./appsource:/appsource"
+ command: bash -c "cd appsource && python hellorpc.py"
+ ports:
+  - "5000:5000"

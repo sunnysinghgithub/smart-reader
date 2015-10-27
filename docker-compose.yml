@@ -1,0 +1,24 @@
+frontend:
+ build: frontend/
+ command: bash -c "cd appsource && npm install && npm start"
+ volumes:
+  - "./frontend/appsource:/appsource"
+ ports:
+  - "80:3000"
+ environment:
+  - NODE_PATH=/usr/lib/node_modules
+ links:
+  - backend
+  - mongodb
+ restart: always
+backend:
+ build: backend/
+ volumes:
+  - "./backend/appsource:/appsource"
+ command: bash -c "cd appsource && python hellorpc.py"
+ ports:
+  - "5000:5000"
+ restart: always
+mongodb:
+ image: mongo
+ command: mongod --smallfiles

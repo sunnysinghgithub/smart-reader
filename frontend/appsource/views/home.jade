@@ -1,0 +1,31 @@
+extends layout
+
+block title
+	title Smart Reader
+
+block content
+	div#header.jumbotron
+		div.container
+			h1
+				a#homelink(href="/home").header
+					| Read Smart. Be Smart.
+			p
+				| We help you read what matters.
+	div.container
+		form#form-main
+			div.form-group
+				textarea#usertext.form-control(rows="25",placeholder="Type your text here.") 
+			div#div-submit.form-group
+				button#btn-findgems.btn.btn-lg.btn-default(type='submit' value='Submit')
+					span.glyphicon.glyphicon-search
+					|  Find Gems
+		div.result
+			div.alert.alert-success(role="alert")
+				| Congratulations! We have found your gems!
+			div#userselection.well.well-sm
+				input#checkbox-usersel(type='checkbox')
+				button#btn-start-over.btn.btn-default.btn-sm.pull-right
+					span.glyphicon.glyphicon-chevron-left
+					| Start Over
+			div.well.well-sm
+				div#gems.panel-body
