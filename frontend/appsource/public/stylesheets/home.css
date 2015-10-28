@@ -20,6 +20,11 @@
 	color: white;
 }
 
+.relatedWordsCanvas {
+	position: relative;
+	z-index: 20;
+}
+
 /******************** Navbar *****************************/
 
 .navbar-btn{
@@ -50,6 +55,8 @@ html, body {
 	color: #2F0B3A;
 	padding-left:10px;
 	padding-right:10px;
+	display:inline-block;
+	position:relative;
 }
 
 #gems {

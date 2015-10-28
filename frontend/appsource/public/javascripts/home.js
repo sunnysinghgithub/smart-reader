@@ -55,6 +55,22 @@ var Home = (function() {
 			state: "false", 
 			onSwitchChange: _toggleUserSelection
 		});
+	},
+	_showRelatedGems = function() {
+		console.log($(this).attr("relatedWords"));
+		var relatedWords = $(this).attr("relatedWords");
+		var $canvas = $("<canvas>");
+		$canvas.addClass("relatedWordsCanvas");
+		$(this).append($canvas);
+		var canvas = $canvas.get(0);
+		canvas.width = 100;
+		canvas.height = 100;
+		var ctx = canvas.getContext('2d');
+		ctx.fillStyle = "orange";
+		ctx.beginPath();
+		ctx.arc(ctx.canvas.width * 0.5, ctx.canvas.height * 0.5,
+            10, 0, 2*Math.PI, false);
+		ctx.fill();
 	}
 	return 	{
 		onload : function() {
@@ -106,7 +122,8 @@ var Home = (function() {
 				$('#gems').contents()
 					.filter(function(){return this.nodeType === 3})
 					.wrap('<span class="not-gem" />');
-			});			
+				$('.gem').click(_showRelatedGems);
+			});
 		},
 		loginWithTwitter : function() {
 			var spinner = new Spinner().spin();
