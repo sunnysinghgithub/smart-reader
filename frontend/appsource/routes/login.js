@@ -27,6 +27,7 @@ router.get('/callback', function(req, res, next) {
 function getAuthHeader(host, path, httpMethod) {
 	var url = "https://"+host+path;
 	var callback = "http://171.68.114.250/login/callback";
+	//var callback = "http://192.168.1.122/login/callback";
 	var oauth_callback = encodeURIComponent(callback);
 	var oauth_consumer_key = "CouvyEOy4RajTz98bdFPKNIGU";
 	var oauth_nonce = crypto.randomBytes(32).toString('hex');

@@ -62,39 +62,43 @@ var Home = (function() {
     	if($(this).attr("relatedwords")){
 	    	var relatedWordsArr = JSON.parse($(this).attr("relatedwords"));
 			console.log(JSON.stringify(relatedWordsArr));
-		    var radius = 50;
-		    var coords = _findCoordsOfPoints(wordX, wordY, radius+40, relatedWordsArr);    
-			console.log(coords);
 			var $canvas=$(".relatedWordsCanvas");
 			$canvas.css({"z-index":"20"});
-			$canvas.css('background-color', 'rgba(158, 167, 184, 0.2)');
+			$canvas.css('background-color', 'rgba(89, 85, 83, 0.8)');
 			var canvas = $canvas.get(0);
 			canvas.width  = canvas.offsetWidth;
 			canvas.height = canvas.offsetHeight;
 			var ctx = canvas.getContext('2d');
+			var radius = 70;
+		    //var coords = _findCoordsOfPoints(canvas.width/2, canvas.height/2, radius+40, relatedWordsArr);    
+		    var coords = _findCoordsOfPointsHorizontal(canvas.width,canvas.height,relatedWordsArr);
+			console.log(coords);
 		    for(var i=0; i<relatedWordsArr.length; i++){
 		        var coord = coords[i];
 		        console.log("drawing bubble at origin: "+coord.X+","+coord.Y);
 		        _drawBubble(ctx, radius, coord.X,coord.Y,relatedWordsArr[i]);
-		    } 
+		    }
+		    $(".gem").css({"z-index":"21","text-decoration":"underline"});
     	}  
 	},
 	_drawBubble = function(ctx, radius, x, y, relatedGem) {
 	    ctx.beginPath();
 	    ctx.strokeStyle = "rgba(128, 128, 128, 0.5)";
 	    ctx.lineWidth=(relatedGem.fontSize/15)*4.0;
-	   	var grd=ctx.createRadialGradient(x,y,radius-40,x,y,radius);		
+	    innerCircleRadius = (relatedGem.fontSize/15)*0.4*radius;
+	   	var grd=ctx.createRadialGradient(x,y,innerCircleRadius,x,y,radius);		
 		grd.addColorStop(0,"white");
-		grd.addColorStop(1,"rgba(245, 208, 76, 1.0)");
+		grd.addColorStop(1,"rgba(245, 208, 76, 0.4)");
 	    ctx.arc(x, y, radius, 0, 2*Math.PI, false);  
 	    ctx.fillStyle = grd;
 	    ctx.fill();
 	    ctx.stroke();
 	    ctx.fillStyle = "black";
-	    var font = "bold " + 15 +"px";
+	    var font = "bold " + 15 +"pt Calibri";
 	    ctx.font = font;
 	    ctx.textBaseline = "top";
-	    ctx.fillText(relatedGem.name, x - (relatedGem.name.length*2.5),y);
+	    ctx.textAlign = 'center';
+	    ctx.fillText(relatedGem.name, x,y-10);
 	},
 	_findCoordsOfPoints = function(wordX, wordY, radius, relatedGems){
 	    var angle = (2*Math.PI)/relatedGems.length;
@@ -108,6 +112,16 @@ var Home = (function() {
 	        startAngle = startAngle+angle;
 	    }
 	    return coords;
+	},
+	_findCoordsOfPointsHorizontal = function(canvasWidth, canvasHeight, relatedGems){
+		var widthForEachSegment = 150;
+		var next=500;
+		var coords = [];
+		for(var i=0; i<relatedGems.length; i++){			
+			coords.push({"X":next, "Y":150});
+			next = next+widthForEachSegment;
+		}
+		return coords;
 	}
 	return 	{
 		onload : function() {
