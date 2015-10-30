@@ -47,9 +47,13 @@ router.post('/findgems', function(req, res, next) {
     	}else{
     		console.log("response from python backend: "+response);
     		var userSelection = [];
-		    for(i=0 ; i<input.length; i++){
-		        userSelection[i] = input[i].text;
-		    }
+            if(input.length == 1){
+                userSelection = input[0].text.split(" ");
+            }else{
+                for(i=0 ; i<input.length; i++){
+                    userSelection[i] = input[i].text;
+                }
+            }
     		var gems = JSON.parse(response);
 		    var index = buildIndex(userSelection);
 		    gems = calculateFontSize(gems);
@@ -105,8 +109,25 @@ function processGems(gems, res, input, userSelection, index, user) {
                                     });        
         importantWords._searchedBy = user;
         importantWords.save();        
+    }
+    var concatenateOutput = false;
+    console.log("input is: "+JSON.stringify(input));
+    console.log("input length: "+input.length);
+    console.log("user selection is: "+JSON.stringify(userSelection));
+    if(input.length == 1){
+        concatenateOutput = true;
+        for (var i = 0; i < userSelection.length; i++){
+            input[i] = {"text":userSelection[i]};
+        }
+        console.log("input after pushing is: "+JSON.stringify(input));
     }    
     input = markGems(input, userSelection, gems, index);
+    if(concatenateOutput){
+        for (var i = 1; i < input.length; i++){
+            input[0].text = input[0].text +" "+ input[i].text;
+        }
+        input.splice(1,input.length-1);
+    }
     console.log("Response: "+JSON.stringify(input));
     res.write(JSON.stringify(input));
     res.end();
@@ -176,7 +197,7 @@ function markGems(input, userSelection, gems, index) {
                     console.log("We are overflowing. This user selection is: "+input[j].text);
                     
                     // Mark the part of the gem in the first entry
-                   	input[j].text = input[j].text.slice(0,gemAtIndex - index[j].start)+"<div class='gem' style='font-size:"+gems[i].fontSize+"px' relatedWords='"+JSON.stringify(gems[i].relatedWords)+"'>"+input[j].text.slice(gemAtIndex - index[j].start, input[j].text.length)+"</div>";
+                   	input[j].text = input[j].text.slice(0,gemAtIndex - index[j].start)+"<div class='gemContainer'><div class='gem' style='font-size:"+gems[i].fontSize+"px' relatedwords='"+JSON.stringify(gems[i].relatedWords)+"'>"+input[j].text.slice(gemAtIndex - index[j].start, input[j].text.length)+"</div></div>";
 
                     console.log("Marked gem: "+input[j].text);
                     
@@ -188,9 +209,8 @@ function markGems(input, userSelection, gems, index) {
                         console.log("Next userselection for marking starts at index: "+index[k].start);
                         
                         if(index[k].start <= lastIndexForMarking) {
-                            input[k].text = "<div class='gem' style='font-size:"+gems[i].fontSize+"px' relatedWords='"+JSON.stringify(gems[k].relatedWords)+"'>"+(input[k].text.slice(0,lastIndexForMarking-index[k].start+1)+"</div>")+input[k].text.slice(lastIndexForMarking-index[k].start+1,index[k].end);
+                            input[k].text = "<div class='gemContainer'><div class='gem' style='font-size:"+gems[i].fontSize+"px' relatedwords='"+JSON.stringify(gems[i].relatedWords)+"'>"+(input[k].text.slice(0,lastIndexForMarking-index[k].start+1)+"</div></div>")+input[k].text.slice(lastIndexForMarking-index[k].start+1,index[k].end);
                             console.log("Marked gem: "+input[k].text);
-                            
                             if(index[k].end >= lastIndexForMarking) {
                                 console.log("We are done marking all userselections");
                                 break;
@@ -201,13 +221,13 @@ function markGems(input, userSelection, gems, index) {
                         }
                     }   
                 }else{
-                    console.log("We are NOT overflowing");                    
-                    // We are within same entry, so our job is simple :)
-					var regEx = new RegExp((gems[i]).name, "ig");
-					var match = regEx.exec(input[j].text);
-					console.log(match[0]);
-					var replaceMask = "<div class='gem' style='font-size:"+gems[i].fontSize+"px' relatedWords='"+JSON.stringify(gems[i].relatedWords)+"'>"+match[0]+"</div>";
-                    input[j].text = input[j].text.replace(regEx,replaceMask);
+                    console.log("We are NOT overflowing");
+                    console.log('user text is: '+input[j].text+'   gemAtIndex: '+gemAtIndex+'   gems[i].name.length+1: '+(gemAtIndex+gems[i].name.length + 1));
+                    var actualGem = input[j].text.slice(gemAtIndex - index[j].start, gemAtIndex+gems[i].name.length+1);
+                    var replaceWith = input[j].text.slice(0, gemAtIndex - index[j].start)+"<div class='gemContainer'><div class='gem' style='font-size:"+gems[i].fontSize+"px' relatedwords='"+JSON.stringify(gems[i].relatedWords)+"'>"+actualGem+"</div></div>"+input[j].text.slice(gemAtIndex - index[j].start +gems[i].name.length+1, input[j].text.length+1);
+                    console.log('actualGem: '+actualGem);
+                    console.log('replaceWith: '+replaceWith);
+                    input[j].text = replaceWith;
                     console.log("Marked gem: "+input[j].text);
                 }
             }

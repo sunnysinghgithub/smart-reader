@@ -21,8 +21,10 @@
 }
 
 .relatedWordsCanvas {
-	position: relative;
-	z-index: 20;
+	position: absolute;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
 }
 
 /******************** Navbar *****************************/
@@ -49,12 +51,22 @@ html, body {
 	height: 100%;
 }
 
+.not-gem {
+	position: relative;
+	display:inline-block;
+}
+
 .gem {
 	font-weight: bold;
 	font-size: 20px;
 	color: #2F0B3A;
 	padding-left:10px;
 	padding-right:10px;
+	position: relative;
+	display:inline-block;
+}
+
+.gemContainer {
 	display:inline-block;
 	position:relative;
 }

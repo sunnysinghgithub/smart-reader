@@ -56,21 +56,57 @@ var Home = (function() {
 			onSwitchChange: _toggleUserSelection
 		});
 	},
-	_showRelatedGems = function() {
-		console.log($(this).attr("relatedWords"));
-		var relatedWords = $(this).attr("relatedWords");
-		var $canvas = $("<canvas>");
-		$canvas.addClass("relatedWordsCanvas");
-		$(this).append($canvas);
-		var canvas = $canvas.get(0);
-		canvas.width = 100;
-		canvas.height = 100;
-		var ctx = canvas.getContext('2d');
-		ctx.fillStyle = "orange";
-		ctx.beginPath();
-		ctx.arc(ctx.canvas.width * 0.5, ctx.canvas.height * 0.5,
-            10, 0, 2*Math.PI, false);
-		ctx.fill();
+	_showRelatedGems = function(event) {
+		var wordX = event.pageX;
+    	var wordY = event.pageY;
+    	if($(this).attr("relatedwords")){
+	    	var relatedWordsArr = JSON.parse($(this).attr("relatedwords"));
+			console.log(JSON.stringify(relatedWordsArr));
+		    var radius = 50;
+		    var coords = _findCoordsOfPoints(wordX, wordY, radius+40, relatedWordsArr);    
+			console.log(coords);
+			var $canvas=$(".relatedWordsCanvas");
+			$canvas.css({"z-index":"20"});
+			var canvas = $canvas.get(0);
+			canvas.width  = canvas.offsetWidth;
+			canvas.height = canvas.offsetHeight;
+			var ctx = canvas.getContext('2d');
+		    for(var i=0; i<relatedWordsArr.length; i++){
+		        var coord = coords[i];
+		        console.log("drawing bubble at origin: "+coord.X+","+coord.Y);
+		        _drawBubble(ctx, radius, coord.X,coord.Y,relatedWordsArr[i]);
+		    } 
+    	}  
+	},
+	_drawBubble = function(ctx, radius, x, y, relatedGem) {
+	    ctx.beginPath();
+	    ctx.strokeStyle = "rgba(128, 128, 128, 0.5)";
+	    ctx.lineWidth=(relatedGem.fontSize/15)*4.0;
+	   	var grd=ctx.createRadialGradient(x,y,radius-40,x,y,radius);		
+		grd.addColorStop(0,"white");
+		grd.addColorStop(1,"rgba(245, 208, 76, 1.0)");
+	    ctx.arc(x, y, radius, 0, 2*Math.PI, false);  
+	    ctx.fillStyle = grd;
+	    ctx.fill();
+	    ctx.stroke();
+	    ctx.fillStyle = "black";
+	    var font = "bold " + 15 +"px";
+	    ctx.font = font;
+	    ctx.textBaseline = "top";
+	    ctx.fillText(relatedGem.name, x - (relatedGem.name.length*2.5),y);
+	},
+	_findCoordsOfPoints = function(wordX, wordY, radius, relatedGems){
+	    var angle = (2*Math.PI)/relatedGems.length;
+	    console.log('angle: '+angle);
+	    var startAngle = 0;
+	    var coords = [];
+	    for(var i=0; i<relatedGems.length; i++){
+	        var X = wordX + radius*Math.sin(startAngle);
+	        var Y = wordY - radius*Math.cos(startAngle);
+	        coords.push({"X":X, "Y":Y});
+	        startAngle = startAngle+angle;
+	    }
+	    return coords;
 	}
 	return 	{
 		onload : function() {
@@ -102,7 +138,7 @@ var Home = (function() {
 				success: function(response) {
 					spinner.stop();
 					// Hide the header
-					$("#header").hide('slide',{direction: 'left'}, 500, Home.renderGems(response));
+					$("#header").hide('slide',{direction: 'left'}, 500);
 					// Hide the Home section
 					$('#form-main').hide('slide',{direction: 'left'}, 500, Home.renderGems(response));					
 				},
@@ -121,7 +157,7 @@ var Home = (function() {
 				$('#gems').html(gems[0].text);
 				$('#gems').contents()
 					.filter(function(){return this.nodeType === 3})
-					.wrap('<span class="not-gem" />');
+					.wrap('<div class="not-gem" />');
 				$('.gem').click(_showRelatedGems);
 			});
 		},
