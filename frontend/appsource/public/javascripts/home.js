@@ -67,6 +67,7 @@ var Home = (function() {
 			console.log(coords);
 			var $canvas=$(".relatedWordsCanvas");
 			$canvas.css({"z-index":"20"});
+			$canvas.css('background-color', 'rgba(158, 167, 184, 0.2)');
 			var canvas = $canvas.get(0);
 			canvas.width  = canvas.offsetWidth;
 			canvas.height = canvas.offsetHeight;

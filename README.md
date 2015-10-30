@@ -1,4 +1,4 @@
-# myapp
+# smart-reader
 
 ## Starting the app
 
