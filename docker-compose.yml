@@ -1,5 +1,5 @@
 frontend:
- image: smart-reader/frontend
+ image: sunnysinghgithub/smart-reader-frontend
  command: bash -c "cd appsource && npm install && npm start"
  volumes:
   - "./frontend/appsource:/appsource"
@@ -12,7 +12,7 @@ frontend:
   - mongodb
  restart: always
 backend:
- build: smart-reader/backend
+ build: sunnysinghgithub/smart-reader-backend
  volumes:
   - "./backend/appsource:/appsource"
  command: bash -c "cd appsource && python hellorpc.py"
