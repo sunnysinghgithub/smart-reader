@@ -3,8 +3,8 @@ language: node_js
 services:
  - docker
 before_install:
- - docker build -t smart-reader/frontend frontend/
- - docker build -t smart-reader/backend backend/
+ - docker build -t sunnysinghgithub/smart-reader-frontend frontend/
+ - docker build -t sunnysinghgithub/smart-reader-backend backend/
  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
- - docker push smart-reader/frontend
- - docker push smart-reader/backend
+ - docker push sunnysinghgithub/smart-reader-frontend
+ - docker push sunnysinghgithub/smart-reader-backend
