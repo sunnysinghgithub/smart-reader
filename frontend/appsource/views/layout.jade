@@ -56,17 +56,17 @@ html(lang="en")
 							if user
 								li
 									p.navbar-text
-										| #{user.name}
+										| #{user.fname} #{user.lname}
 								li
-									button#btn-login.btn.btn-default.btn-sm.navbar-btn
+									button#btn-logout.btn.btn-default.btn-sm.navbar-btn
 										|   Logout
 							else
 								li
-									button#btn-login.btn.btn-default.btn-sm.navbar-btn
+									button#btn-login-overlay.btn.btn-default.btn-sm.navbar-btn
 										span.glyphicon.glyphicon-user
 										|   Login
 								li
-									button#btn-register.btn.btn-default.btn-sm.navbar-btn
+									button#btn-register-overlay.btn.btn-default.btn-sm.navbar-btn
 										span.glyphicon.glyphicons-plus
 											| +
 										|   Register
@@ -80,17 +80,17 @@ html(lang="en")
 							span.glyphicon.glyphicon-user
 							b  Login
 						div.panel-body
-							form.form-horizontal
+							form.form-horizontal(action="/login",method="post")
 								div.form-group
-									label.col-sm-2.control-label(for="input-email")
-										| Email
+									label.col-sm-2.control-label(for="input-login-uname")
+										| Username
 									div.col-sm-10
-										input#input-email.form-control(type="email",placeholder="Email")
+										input#input-login-uname.form-control(type="text",placeholder="Username",name="uname")
 								div.form-group
-									label.col-sm-2.control-label(for="input-password")
+									label.col-sm-2.control-label(for="input-login-password")
 										| Password
 									div.col-sm-10
-										input#input-password.form-control(type="password",placeholder="Password")
+										input#input-login-password.form-control(type="password",placeholder="Password",name="password")
 								div.form-group
 									div.col-sm-offset-2.col-sm-10
 										div.checkbox
@@ -99,7 +99,7 @@ html(lang="en")
 												| Remember me
 								div.form-group
 									div.col-sm-offset-2.col-sm-10
-										button.btn.btn-default(type="submit")
+										button#btn-sign-in.btn.btn-default(type="submit")
 											| Sign in
 						div.panel-footer
 							a.btn.btn-sm.btn-default.btn-social.btn-facebook.login-btn
@@ -118,31 +118,37 @@ html(lang="en")
 								| +
 							b  Register
 						div.panel-body
-							form.form-horizontal
-								div.form-group
-									label.col-sm-2.control-label(for="input-fname")
-										| First Name
-									div.col-sm-10
-										input#input-fname.form-control(type="text",placeholder="First Name")
-								div.form-group
-									label.col-sm-2.control-label(for="input-lname")
-										| Last Name
-									div.col-sm-10
-										input#input-lname.form-control(type="text",placeholder="Last Name")
-								div.form-group
-									label.col-sm-2.control-label(for="input-email")
-										| Email
-									div.col-sm-10
-										input#input-email.form-control(type="email",placeholder="Email")
-								div.form-group
-									label.col-sm-2.control-label(for="input-password")
-										| Password
-									div.col-sm-10
-										input#input-password.form-control(type="password",placeholder="Password")
-								div.form-group
-									div.col-sm-offset-2.col-sm-10
-										button.btn.btn-default(type="submit")
-											| Register
+							form.form-horizontal(action="/register",method="post")
+								fieldset
+									div.form-group
+										label.col-sm-2.control-label(for="input-register-fname")
+											| First Name
+										div.col-sm-10
+											input#input-register-fname.form-control(type="text",placeholder="First Name",name="fname")
+									div.form-group
+										label.col-sm-2.control-label(for="input-register-lname")
+											| Last Name
+										div.col-sm-10
+											input#input-register-lname.form-control(type="text",placeholder="Last Name",name="lname")
+									div.form-group
+										label.col-sm-2.control-label(for="input-register-uname")
+											| Username
+										div.col-sm-10
+											input#input-register-uname.form-control(type="text",placeholder="Username",name="uname")								
+									div.form-group
+										label.col-sm-2.control-label(for="input-register-email")
+											| Email
+										div.col-sm-10
+											input#input-register-email.form-control(type="text",placeholder="Email",name="email")
+									div.form-group
+										label.col-sm-2.control-label(for="input-register-password")
+											| Password
+										div.col-sm-10
+											input#input-register-password.form-control(type="password",placeholder="Password",name="password")
+									div.form-group
+										div.col-sm-offset-2.col-sm-10
+											button#btn-register.btn.btn-default(type="submit")
+												| Register
 		footer
 			div.container
 				p.small

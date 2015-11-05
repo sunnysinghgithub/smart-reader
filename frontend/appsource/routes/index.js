@@ -16,6 +16,30 @@ router.get('/', function(req, res, next) {
     }
 });
 
+router.post('/register', function(req, res, next) {
+    var registerRequest = req.body; 
+    console.log('Received registration request: '+JSON.stringify(registerRequest));
+    var dbUser = new models.User;
+    dbUser.fname = registerRequest.fname;
+    dbUser.lname = registerRequest.lname;
+    dbUser.uname = registerRequest.uname;
+    dbUser.email = registerRequest.email;
+    dbUser.password = registerRequest.password;
+    dbUser.save();
+    req.session.user = dbUser;
+    res.writeHead(302, {
+        'Location': '/home'
+    });    
+    res.end();
+});
+
+router.post('/logout', function(req, res, next) {
+    if(req.session && req.session.user){
+        req.session.destroy();
+        res.end();
+    }
+});
+
 /* GET home page. */
 router.get('/home', function(req, res, next) {
     if(req.session && req.session.user){

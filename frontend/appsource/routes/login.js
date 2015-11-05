@@ -11,6 +11,21 @@ var router = express.Router();
 var oauth_token="";
 var oauth_token_secret="";
 
+router.post('/', function(req, res, next) {
+	var loginRequest = req.body;
+	console.log('Received Login Request: '+JSON.stringify(loginRequest));
+	models.User.findOne({ uname:loginRequest.uname, password:loginRequest.password }, function (err, user){
+		if(user){
+			console.log('Found User: '+user);
+			req.session.user = user;
+		    res.writeHead(302, {
+    			'Location': '/home'
+			});
+		}
+		res.end();		
+	});
+});
+
 /* GET users listing. */
 router.get('/twitter', function(req, res, next) {
   sendTokenRequest(req, res);  
@@ -26,7 +41,7 @@ router.get('/callback', function(req, res, next) {
 
 function getAuthHeader(host, path, httpMethod) {
 	var url = "https://"+host+path;
-	var callback = "http://171.68.114.250/login/callback";
+	var callback = "http://171.68.114.64/login/callback";
 	//var callback = "http://192.168.1.122/login/callback";
 	var oauth_callback = encodeURIComponent(callback);
 	var oauth_consumer_key = "CouvyEOy4RajTz98bdFPKNIGU";
@@ -168,7 +183,7 @@ function sendUserIdentityRequest(request,response) {
 		var user = {};
 		user.name = userIdentity.name;
 		var dbUser = new models.User;
-		dbUser.name = user.name;
+		dbUser.fname = user.name;
 		dbUser.save();
 		request.session.user = dbUser;
 		response.render('home', { title: 'Smart Reader - Home', user: user});

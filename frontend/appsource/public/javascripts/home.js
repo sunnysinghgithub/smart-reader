@@ -20,8 +20,9 @@ var Home = (function() {
 				$('#form-main').show('slide',{direction: 'left'}, 200);
 			});
 		});
+		$('#btn-logout').click(Home.logout);
 		$('#btn-login-twitter').click(Home.loginWithTwitter);
-		$("#btn-login").fancybox({
+		$("#btn-login-overlay").fancybox({
 		    autoScale: true,
 		    autoSize: false,
 		    href : '#login',
@@ -33,7 +34,7 @@ var Home = (function() {
         	width: '800px',
         	height: '390px'
 		}); // fancybox
-		$("#btn-register").fancybox({
+		$("#btn-register-overlay").fancybox({
 		    autoScale: true,
 		    autoSize: false,
 		    href : '#register',
@@ -43,7 +44,7 @@ var Home = (function() {
         	transitionIn : 'elastic',
         	transitionOut : 'elastic',
         	width: '800px',
-        	height: '390px'
+        	height: '450px'
 		}); // fancybox
 	},
 	_showDisplaySwitch = function() {
@@ -189,7 +190,22 @@ var Home = (function() {
 					spinner.stop();
 					var resObj = JSON.parse(response);
 					document.location.href = resObj.location;
-					console.log(resObj.location);
+				}
+			});
+		},
+		logout : function() {
+			var spinner = new Spinner().spin();
+			$.ajax({
+				method: "POST",
+				contentType: "application/json",
+				url: "/logout",				
+				beforeSend: function() {
+					$('body').append(spinner.el);
+				},
+				success: function(response) {
+					spinner.stop();
+					// redirect user to root
+			        window.location = '/';
 				}
 			});
 		}
