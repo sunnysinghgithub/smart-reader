@@ -19,7 +19,7 @@ html(lang="en")
 		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.pack.js")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js")		
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js")
 	body
 		canvas.relatedWordsCanvas
 		div.container
@@ -45,10 +45,6 @@ html(lang="en")
 									span.glyphicon.glyphicon-option-horizontal
 									|   About
 							li
-								button.btn.btn-default.btn-sm.navbar-btn
-									span.glyphicon.glyphicon-phone-alt
-									|   Contact
-							li
 								button#btn-chromeex.btn.btn-default.btn-sm.navbar-btn
 									span.glyphicon.glyphicon-new-window
 									|  Chrome Extension
@@ -64,12 +60,12 @@ html(lang="en")
 								li
 									button#btn-login-overlay.btn.btn-default.btn-sm.navbar-btn
 										span.glyphicon.glyphicon-user
-										|   Login
+										|   Sign in
 								li
 									button#btn-register-overlay.btn.btn-default.btn-sm.navbar-btn
 										span.glyphicon.glyphicons-plus
 											| +
-										|   Register
+										|   Sign up
 
 		div.content
 			block content
@@ -78,7 +74,7 @@ html(lang="en")
 					div.panel.panel-primary
 						div.panel-heading
 							span.glyphicon.glyphicon-user
-							b  Login
+							b  Sign in
 						div.panel-body
 							div#login-alert.alert.alert-danger.collapse(role="alert")
 								span.glyphicon.glyphicon-alert
@@ -120,7 +116,7 @@ html(lang="en")
 						div.panel-heading
 							span.glyphicon.glyphicons-plus
 								| +
-							b  Register
+							b  Sign up
 						div.panel-body
 							form.form-horizontal(action="/register",method="post")
 								fieldset
@@ -152,7 +148,7 @@ html(lang="en")
 									div.form-group
 										div.col-sm-offset-2.col-sm-10
 											button#btn-register.btn.btn-default(type="submit")
-												| Register
+												| Submit
 		footer
 			div.container
 				p.small

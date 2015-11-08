@@ -6,12 +6,20 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var uuid = require('uuid');
 var session = require('express-session');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
 
 var cors = require('cors');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
+
+var options = {
+  key: fs.readFileSync('/certs/server.key'),
+  cert: fs.readFileSync('/certs/server.crt')
+};
 
 var app = express();
 
@@ -73,5 +81,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
+http.createServer(app).listen(80);
+https.createServer(options,app).listen(443);
 
 module.exports = app;
