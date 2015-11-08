@@ -18,11 +18,10 @@ router.post('/', function(req, res, next) {
 		if(user){
 			console.log('Found User: '+user);
 			req.session.user = user;
-		    res.writeHead(302, {
-    			'Location': '/home'
-			});
+		}else{
+			res.status(500).send('Sorry, the login failed. Please try again.');
 		}
-		res.end();		
+		res.end();
 	});
 });
 

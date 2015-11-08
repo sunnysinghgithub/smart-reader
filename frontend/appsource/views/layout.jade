@@ -49,8 +49,8 @@ html(lang="en")
 									span.glyphicon.glyphicon-phone-alt
 									|   Contact
 							li
-								button.btn.btn-success.btn-sm.navbar-btn
-									span.glyphicon.glyphicon-download-alt
+								button#btn-chromeex.btn.btn-default.btn-sm.navbar-btn
+									span.glyphicon.glyphicon-new-window
 									|  Chrome Extension
 						ul.nav.navbar-nav.navbar-right
 							if user
@@ -73,14 +73,18 @@ html(lang="en")
 
 		div.content
 			block content
-			div.hidden
+			div.collapse
 				div#login
 					div.panel.panel-primary
 						div.panel-heading
 							span.glyphicon.glyphicon-user
 							b  Login
 						div.panel-body
-							form.form-horizontal(action="/login",method="post")
+							div#login-alert.alert.alert-danger.collapse(role="alert")
+								span.glyphicon.glyphicon-alert
+								| 
+								span.alertText
+							form#form-login.form-horizontal
 								div.form-group
 									label.col-sm-2.control-label(for="input-login-uname")
 										| Username

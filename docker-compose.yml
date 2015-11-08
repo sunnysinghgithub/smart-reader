@@ -12,7 +12,7 @@ frontend:
   - mongodb
  restart: always
 backend:
- build: sunnysinghgithub/smart-reader-backend
+ image: sunnysinghgithub/smart-reader-backend
  volumes:
   - "./backend/appsource:/appsource"
  command: bash -c "cd appsource && python hellorpc.py"

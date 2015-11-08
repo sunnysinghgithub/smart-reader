@@ -50,6 +50,37 @@ router.get('/home', function(req, res, next) {
     }
 });
 
+router.post('/findRelatedGems', function(req, res, next) {
+    console.log('Received Find Gems request: '+JSON.stringify(req.body));
+    var gemName = req.body.gemName;
+    if(req.session && req.session.user){
+        models.ImportantWords.find({_searchedBy:req.session.user._id,words:{'$regex':gemName}}).exec(function(err, importantWords){
+            var relatedWords = [];
+            for(var j=0; j<importantWords.length; j++){
+                if(importantWords[j].words){
+                    relatedWords = relatedWords.concat(extractRelatedWords(importantWords, j, gemName));
+                }
+            }
+            console.log('relatedWords: '+relatedWords);
+            res.write(relatedWords);
+            res.end();
+        });
+    }
+});
+
+function extractRelatedWords(importantWords, j, gemName) {
+    var relatedWords = [];
+    JSON.parse(importantWords[j].words, function(k,v){
+        if(typeof(v) == "object"){
+            if(v.name && v.name!=gemName){
+                relatedWords.push(v);
+            }            
+        }
+        return v;
+    });
+    return relatedWords;
+}
+
 /* POST API to search for the important words in given text elements. */
 router.post('/findgems', function(req, res, next) {
 	console.log("received request: "+JSON.stringify(req.body));
@@ -106,9 +137,7 @@ function searchRelatedGems(i, gems, user_id, callback, res, input, userSelection
             }
             searchRelatedGems(i+1, gems, user_id, callback, res, input, userSelection, index, user);
         });
-    }else{
-        callback(gems, res, input, userSelection, index, user);
-    }        
+    }      
 }
 
 function getRelatedWords(importantWords, j, gem) {

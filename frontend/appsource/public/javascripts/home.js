@@ -11,6 +11,9 @@ var Home = (function() {
 		$("#btn-home").click(function() {
 			location.href="/home";
 		});
+		$("#btn-chromeex").click(function() {
+			window.open('https://chrome.google.com/webstore/detail/important-words-highlight/kimpoamojhhhmbcjbpfhgjinnicoffnm')
+		});
 		$('#form-main').submit(Home.findGems);
 		$('#btn-start-over').click(function() {
 			$(".result").hide('slide',{direction: 'right'}, 200, function() {
@@ -22,17 +25,16 @@ var Home = (function() {
 		});
 		$('#btn-logout').click(Home.logout);
 		$('#btn-login-twitter').click(Home.loginWithTwitter);
+		$("#form-login").submit(Home.login);
 		$("#btn-login-overlay").fancybox({
 		    autoScale: true,
-		    autoSize: false,
+		    autoSize: true,
 		    href : '#login',
 		    padding: 0,
 		    closeClick : false,
 		    titleShow : false,
         	transitionIn : 'elastic',
-        	transitionOut : 'elastic',
-        	width: '800px',
-        	height: '390px'
+        	transitionOut : 'elastic'
 		}); // fancybox
 		$("#btn-register-overlay").fancybox({
 		    autoScale: true,
@@ -44,7 +46,7 @@ var Home = (function() {
         	transitionIn : 'elastic',
         	transitionOut : 'elastic',
         	width: '800px',
-        	height: '450px'
+        	height: '460px'
 		}); // fancybox
 	},
 	_showDisplaySwitch = function() {
@@ -70,8 +72,7 @@ var Home = (function() {
 			canvas.width  = canvas.offsetWidth;
 			canvas.height = canvas.offsetHeight;
 			var ctx = canvas.getContext('2d');
-			var radius = 70;
-		    //var coords = _findCoordsOfPoints(canvas.width/2, canvas.height/2, radius+40, relatedWordsArr);    
+			var radius = 70;  
 		    var coords = _findCoordsOfPointsHorizontal(canvas.width,canvas.height,relatedWordsArr);
 			console.log(coords);
 		    for(var i=0; i<relatedWordsArr.length; i++){
@@ -192,6 +193,29 @@ var Home = (function() {
 					document.location.href = resObj.location;
 				}
 			});
+		},
+		login : function(event) {
+			var spinner = new Spinner().spin();
+			$.ajax({
+				method: "POST",
+				url: "/login",		
+				data: $('#form-login').serialize(),
+				beforeSend: function() {
+					$('body').append(spinner.el);
+				},
+				success: function(response) {
+					spinner.stop();
+					console.log(response);
+					// redirect user to root
+			        window.location = '/';
+				},
+				error: function(response) {
+					spinner.stop();
+					$('#login-alert .alertText').text(response.responseText);
+					$('#login-alert').show("slow");
+				}
+			});
+			event.preventDefault();
 		},
 		logout : function() {
 			var spinner = new Spinner().spin();
