@@ -15,6 +15,7 @@
         height: 75px;
       }
     </style>
+   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
 
     <!--
       - JavaScript and HTML must be in separate files: see our Content Security
@@ -26,8 +27,54 @@
     <script src="jquery-1.11.1.js"></script>
     <script src="rangy-core.js"></script>
     <script src="rangy-classapplier.js"></script>
+    <script src="bootstrap.min.js"></script>
   </head>
   <body>
-	<button id="highlightImportantWords">Highlight Important Words!</button>
+    <div class="container">
+  	  <button id="highlightImportantWords" class="btn btn-primary">Show important words.</button>
+      <div id="login">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <span class="glyphicon glyphicon-user"></span><b> Sign in</b>
+          </div>
+          <div class="panel-body">
+            <div id="login-alert" role="alert" class="alert alert-danger collapse">
+              <span class="glyphicon glyphicon-alert"></span> <span class="alertText"></span>
+            </div>
+            <form id="form-login" class="form-horizontal">
+              <div class="form-group">
+                <label for="input-login-uname" class="col-sm-2 control-label">Username</label>
+                <div class="col-sm-10">
+                  <input id="input-login-uname" type="text" placeholder="Username" name="uname" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="input-login-password" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                  <input id="input-login-password" type="password" placeholder="Password" name="password" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <div class="checkbox">
+                    <label><input type="checkbox">Remember me</label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button id="btn-sign-in" type="submit" class="btn btn-default">Sign in</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="panel-footer">
+            <a class="btn btn-sm btn-default btn-social btn-facebook login-btn"><i class="fa fa-facebook"></i>Sign in with Facebook</a>
+            <a id="btn-login-twitter" class="btn btn-sm btn-default btn-social btn-twitter login-btn"><i class="fa fa-twitter"></i>Sign in with Twitter</a>
+            <a class="btn btn-sm btn-default btn-social btn-google login-btn"><i class="fa fa-google"></i>Sign in with Google</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

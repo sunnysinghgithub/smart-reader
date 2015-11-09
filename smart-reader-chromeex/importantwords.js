@@ -31,7 +31,7 @@ var ImportantWordsProcessor = (function() {
 			$.ajax({
 				method: "POST",
 				contentType: "application/json",
-				url: "http://172.17.0.4:3000/findgems",
+				url: "http://192.168.1.122/findgems",
 				data: JSON.stringify(userSelectionText),
 				dataType: "json",
 				success: Highlighter.highlight

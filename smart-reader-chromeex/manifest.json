@@ -13,8 +13,8 @@
   "content_scripts" : [
      {
       "matches": ["http://*/*","https://*/*"],
-	    "css": ["importantwords.css"],
-      "js": ["importantwords.js","jquery-1.11.1.js","rangy-core.js","rangy-classapplier.js","jquery-ui.min.js"]
+	    "css": ["importantwords.css","bootstrap.min.css"],
+      "js": ["importantwords.js","jquery-1.11.1.js","rangy-core.js","rangy-classapplier.js","jquery-ui.min.js","bootstrap.min.js"]
     }
   ]
 }
