@@ -3,8 +3,10 @@ frontend:
  command: bash -c "cd appsource && npm install && npm start"
  volumes:
   - "./frontend/appsource:/appsource"
+  - "./frontend/certs:/certs"
  ports:
-  - "80:3000"
+  - "80:80"
+  - "443:443"
  environment:
   - NODE_PATH=/usr/lib/node_modules
  links:
